@@ -38,7 +38,7 @@ h1 { margin-top: 18px; font-size: clamp(34px, 5vw, 60px); line-height: 1.04; let
 }
 .tabs button:hover { color: var(--ink); }
 .tabs button[aria-selected="true"] { background: var(--panel); color: var(--ink); box-shadow: 0 1px 2px rgba(20, 24, 42, .08), 0 4px 14px -6px rgba(20, 24, 42, .18); }
-@media (max-width: 480px) { .tabs { display: flex; } .tabs button { flex: 1; padding: 12px 8px; font-size: 14px; } .tabs .long { display: none; } }
+@media (max-width: 720px) { .tabs { display: flex; } .tabs button { flex: 1; padding: 12px 8px; font-size: 14px; } .tabs .long { display: none; } }
 
 .panel { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(24px, 4vw, 56px); align-items: center;
   background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: clamp(20px, 3.4vw, 44px); }
@@ -85,14 +85,14 @@ footer.wrap { padding-top: 32px; padding-bottom: 40px; font-size: 14px; color: v
 <header class="wrap">
 <span class="tag">Private preview</span>
 <h1>Website options for Prashant</h1>
-<p class="sub">Three directions for your personal site. Each one has the same content and four case pages. Open each one, then tell us which you like best.</p>
+<p class="sub">Two new designs for your personal site, next to the version we sent earlier. Each one has the same content and four case pages. Compare all three, then reply with your pick.</p>
 </header>
 
 <main class="wrap">
 <div class="tabs" role="tablist" aria-label="Website options" hidden>
-<button type="button" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="true">Option 1<span class="long">: Report</span></button>
-<button type="button" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1">Option 2<span class="long">: Blue</span></button>
-<button type="button" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1">Option 3<span class="long">: Board</span></button>
+<button type="button" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="true">Option 1<span class="long">: Annual Report</span></button>
+<button type="button" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1">Option 2<span class="long">: Studio Board</span></button>
+<button type="button" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1">Option 3<span class="long">: Version 2 (sent earlier)</span></button>
 </div>
 
 <section class="panel" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
@@ -111,8 +111,8 @@ footer.wrap { padding-top: 32px; padding-bottom: 40px; font-size: 14px; color: v
 <section class="panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2">
 <div>
 <p class="kick">Option 2</p>
-<h2>Madrid Blue</h2>
-<p class="style">A bold split screen: a cobalt panel with your photo and booking button stays on screen while your work scrolls past. It uses condensed type, a timeline that fills in as you read, and case rows that turn blue on hover.</p>
+<h2>The Studio Board</h2>
+<p class="style">A modern board of rounded tiles on warm sand, in navy and soft blue. Numbers count up, career steps slide sideways, and case cards light up under the cursor.</p>
 <div class="acts"><a class="btn" href="option-2/index.html">Open full site <span aria-hidden="true">&rarr;</span></a><a class="sm-link" href="option-2/market-entry.html">See a case page</a></div>
 </div>
 <div class="stage">
@@ -124,8 +124,8 @@ footer.wrap { padding-top: 32px; padding-bottom: 40px; font-size: 14px; color: v
 <section class="panel" id="panel-3" role="tabpanel" aria-labelledby="tab-3">
 <div>
 <p class="kick">Option 3</p>
-<h2>The Studio Board</h2>
-<p class="style">A modern board of rounded tiles on warm sand, in navy and soft blue. Numbers count up, career steps slide sideways, and case cards light up under the cursor.</p>
+<h2>Version 2 (sent earlier)</h2>
+<p class="style">The version we sent you before, in light beige and navy with a blue accent. It is here so you can compare it with the two new designs.</p>
 <div class="acts"><a class="btn" href="option-3/index.html">Open full site <span aria-hidden="true">&rarr;</span></a><a class="sm-link" href="option-3/market-entry.html">See a case page</a></div>
 </div>
 <div class="stage">

@@ -1,4 +1,5 @@
-"""Builds option-1, option-2 and option-3 HTML from content.py.
+"""Builds option-1 (Annual Report) and option-2 (Studio Board) HTML from content.py.
+Option-3 is the earlier Version 2, copied by hand from v2-miranda.
 
 Run: python3 _build/build.py   (from the repo root or anywhere)
 CSS, JS, fonts and images live in each option folder and are edited by hand.
@@ -14,8 +15,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 OPTIONS = {
     1: {"name": "The Annual Report", "theme": "#f2ede3"},
-    2: {"name": "Madrid Blue", "theme": "#0b1330"},
-    3: {"name": "The Studio Board", "theme": "#ece6dc"},
+    2: {"name": "The Studio Board", "theme": "#ece6dc"},
 }
 
 
@@ -191,126 +191,7 @@ def o1_case(i):
 """
 
 
-# ---------------------------------------------------------------- Option 2
-O2_INDEX = [("results", "Results"), ("career", "Career"), ("work", "Work"),
-            ("strengths", "Strengths"), ("about", "About"), ("contact", "Contact")]
-
-
-def o2_index():
-    idx = "".join(f'<a href="#{a}">{b}</a>' for a, b in O2_INDEX)
-    stats = "".join(
-        f'<div class="stat" data-reveal><span class="fig">{count(p, n, s)}</span><p>{lbl}</p></div>'
-        for p, n, s, lbl in C.STATS)
-    career = "".join(
-        f'<li class="t-step" data-reveal><span class="yr">{y}</span><h3>{r}</h3><p class="co">{co}</p><p class="what">{w}</p></li>'
-        for y, r, co, w in C.CAREER)
-    cases = "".join(
-        f'<li><a class="row" href="{c["slug"]}.html" data-reveal><span class="res"><span class="fig">{c["res"][0]}</span><span>{c["res"][1]}</span></span>'
-        f'<span class="body"><span class="where">{c["company"]}, {c["years"]}</span><span class="t">{c["home_title"]}</span><span class="sum">{c["sum"]}</span></span>'
-        f'<span class="go" aria-hidden="true">&rarr;</span></a></li>'
-        for c in C.CASES)
-    bring = "".join(
-        f'<div class="str" data-reveal><h3>{h}</h3><p>{t}</p><p class="proof"><span class="fig">{f}</span><span>{pl}</span></p></div>'
-        for h, t, (f, pl) in C.BRING)
-    about = "".join(f"<p>{p}</p>" for p in C.ABOUT)
-    facts = "".join(f'<div class="fact"><h3>{h}</h3>{ul}</div>' for h, ul in facts_lists())
-    return head(2, C.TITLE, C.DESC, True, ("archivo-latin-wdth-normal.woff2",)) + f"""<body>
-{skip()}{preview_bar(2)}<div class="split">
-<aside class="rail" aria-label="Profile">
-<div class="rail-in">
-<figure class="ph"><img src="img/prashant.jpg" width="720" height="900" fetchpriority="high" alt="{C.PHOTO_ALT}"></figure>
-<div class="who">
-<p class="nm">Prashant<br>Kumar Jindal</p>
-<p class="role">Strategy and business development. International MBA candidate, IE Business School, Madrid.</p>
-</div>
-<nav class="index" aria-label="Sections">{idx}</nav>
-<div class="rail-cta"><a class="btn sand" href="{C.MAILTO}">Book a meeting <span aria-hidden="true">&rarr;</span></a><a class="rl" href="{C.LINKEDIN}" rel="noopener">LinkedIn</a></div>
-</div>
-</aside>
-<main id="main" class="flow">
-
-<section class="hero" aria-labelledby="hero-title">
-<h1 id="hero-title">{C.HERO_H1_PRE}<em>{C.HERO_H1_EM}</em>{C.HERO_H1_POST}</h1>
-<p class="lede">{C.HERO_LEDE}</p>
-<div class="ctas"><a class="btn" href="{C.MAILTO}">Book a meeting <span aria-hidden="true">&rarr;</span></a><a class="btn ghost" href="#work">See the work</a></div>
-</section>
-
-<section class="blk" id="results" aria-label="Results in numbers"><div class="stats">{stats}</div></section>
-
-<section class="blk" id="career" aria-labelledby="career-title">
-<h2 id="career-title">{C.CAREER_H2}</h2>
-<p class="intro">{C.CAREER_INTRO}</p>
-<ol class="tl">{career}</ol>
-</section>
-
-<section class="blk" id="work" aria-labelledby="work-title">
-<h2 id="work-title">Selected work</h2>
-<p class="intro">{C.WORK_INTRO}</p>
-<ul class="rows">{cases}</ul>
-</section>
-
-<section class="blk" id="strengths" aria-labelledby="bring-title">
-<h2 id="bring-title">{C.BRING_H2}</h2>
-<div class="strs">{bring}</div>
-</section>
-
-<section class="blk" id="about" aria-labelledby="about-title">
-<h2 id="about-title">About me</h2>
-<div class="bio">{about}</div>
-<div class="facts">{facts}</div>
-</section>
-
-<section class="blk contact" id="contact" aria-labelledby="contact-title">
-<h2 id="contact-title">{C.CONTACT_H2}</h2>
-<p class="intro">{C.CONTACT_INTRO}</p>
-<a class="btn" href="{C.MAILTO}">Book a meeting <span aria-hidden="true">&rarr;</span></a>
-<div class="lines">{contact_lines()}</div>
-</section>
-{footer()}</main>
-</div>
-</body>
-</html>
-"""
-
-
-def o2_case(i):
-    c = C.CASES[i]
-    nx = next_case(i)
-    meta = "".join(f"<div><dt>{a}</dt><dd>{b}</dd></div>" for a, b in c["meta"])
-    chapters = "".join(
-        f'<section class="chapter" data-reveal><h2>{h}</h2>' + (f'<p class="role">{r}</p>' if r else "") + ol(items) + "</section>"
-        for h, r, items in c["chapters"])
-    figs = "".join(f'<div class="kfig"><span class="fig">{f}</span><span>{l}</span></div>' for f, l in c["figs"])
-    tags = "".join(f"<li>{t}</li>" for t in c["tags"])
-    note = f'<p class="note">{c["note"]}</p>' if c["note"] else ""
-    return head(2, f'{c["title"]} | Prashant Kumar Jindal', c["sum"], False, ("archivo-latin-wdth-normal.woff2",)) + f"""<body class="casepage">
-{skip()}{preview_bar(2)}<div class="split">
-<aside class="rail" aria-label="Case summary">
-<div class="rail-in">
-<a class="crumb" href="index.html#work">&larr; All work</a>
-<p class="rail-co">{c["company"]}<br>{c["years"]}</p>
-<figure class="ph"><img src="img/prashant.jpg" width="720" height="900" alt="{C.PHOTO_ALT}"></figure>
-<dl class="meta">{meta}</dl>
-<div class="rail-cta"><a class="btn sand" href="{C.MAILTO}">Book a meeting <span aria-hidden="true">&rarr;</span></a></div>
-</div>
-</aside>
-<main id="main" class="flow">
-<header class="case-head">
-<h1>{c["title"]}</h1>
-<p class="lede">{c["lede"]}</p>{note}
-</header>
-<section class="blk figs" aria-label="Key figures">{figs}</section>
-<div class="blk chapters">{chapters}</div>
-<section class="blk"><ul class="tags" aria-label="Skills used">{tags}</ul><p class="ask">{c["ask"]}</p></section>
-<nav class="next" aria-label="Next case"><a href="{nx["slug"]}.html"><span class="k">Next case</span><span class="t">{nx["title"]}</span><span class="go" aria-hidden="true">&rarr;</span></a></nav>
-{footer()}</main>
-</div>
-</body>
-</html>
-"""
-
-
-# ---------------------------------------------------------------- Option 3
+# ---------------------------------------------------------------- Option 2 (Studio Board)
 def o3_header():
     return f"""<header class="bar"><div class="wrap"><div class="bar-in">
 <a class="chip-name" href="index.html"><span class="mono" aria-hidden="true">PJ</span><span>Prashant Kumar Jindal</span></a>
@@ -341,8 +222,8 @@ def o3_index():
     facts = "".join(
         f'<details{" open" if k == 0 else ""}><summary>{h}</summary>{ul}</details>'
         for k, (h, ul) in enumerate(facts_lists()))
-    return head(3, C.TITLE, C.DESC, True, ("plus-jakarta-sans-latin-wght-normal.woff2",)) + f"""<body>
-{skip()}{preview_bar(3)}{o3_header()}<main id="main">
+    return head(2, C.TITLE, C.DESC, True, ("plus-jakarta-sans-latin-wght-normal.woff2",)) + f"""<body>
+{skip()}{preview_bar(2)}{o3_header()}<main id="main">
 
 <section class="wrap bento hero-b" aria-labelledby="hero-title">
 <div class="tile intro-t" data-reveal>
@@ -404,8 +285,8 @@ def o3_case(i):
                    for k, (f, l) in enumerate(c["figs"]))
     tags = "".join(f"<li>{t}</li>" for t in c["tags"])
     note = f'<p class="note">{c["note"]}</p>' if c["note"] else ""
-    return head(3, f'{c["title"]} | Prashant Kumar Jindal', c["sum"], False, ("plus-jakarta-sans-latin-wght-normal.woff2",)) + f"""<body class="casepage">
-{skip()}{preview_bar(3)}{o3_header()}<main id="main">
+    return head(2, f'{c["title"]} | Prashant Kumar Jindal', c["sum"], False, ("plus-jakarta-sans-latin-wght-normal.woff2",)) + f"""<body class="casepage">
+{skip()}{preview_bar(2)}{o3_header()}<main id="main">
 <section class="wrap bento case-b">
 <div class="tile title-t" data-reveal>
 <a class="crumb" href="index.html#work">&larr; All work</a>
@@ -431,7 +312,7 @@ def write(path, text):
 
 
 def main():
-    builders = {1: (o1_index, o1_case), 2: (o2_index, o2_case), 3: (o3_index, o3_case)}
+    builders = {1: (o1_index, o1_case), 2: (o3_index, o3_case)}
     for n, (idx, case) in builders.items():
         write(f"option-{n}/index.html", idx())
         for i, c in enumerate(C.CASES):

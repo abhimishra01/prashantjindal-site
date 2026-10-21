@@ -1,5 +1,5 @@
-"""Builds option-1 (Annual Report) and option-2 (Studio Board) HTML from content.py.
-Option-3 is the earlier Version 2, copied by hand from v2-miranda.
+"""Builds option-1 (Annual Report), option-2 (Classic) and option-3 (Studio Board) from content.py.
+Option-4 is the earlier Version 2, copied by hand from v2-miranda.
 
 Run: python3 _build/build.py   (from the repo root or anywhere)
 CSS, JS, fonts and images live in each option folder and are edited by hand.
@@ -15,7 +15,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 OPTIONS = {
     1: {"name": "The Annual Report", "theme": "#f2ede3"},
-    2: {"name": "The Studio Board", "theme": "#ece6dc"},
+    2: {"name": "Classic", "theme": "#F1E9DB"},
+    3: {"name": "The Studio Board", "theme": "#ece6dc"},
 }
 
 
@@ -42,7 +43,7 @@ def head(n, title, desc, preload_img=False, fonts=()):
 
 def preview_bar(n):
     return (f'<div class="pv"><div class="pv-in"><a href="../index.html">&larr; Back to options</a>'
-            f'<span>Option {n} of 3: {OPTIONS[n]["name"]}</span></div></div>\n')
+            f'<span>Option {n} of 4: {OPTIONS[n]["name"]}</span></div></div>\n')
 
 
 def skip():
@@ -191,7 +192,10 @@ def o1_case(i):
 """
 
 
-# ---------------------------------------------------------------- Option 2 (Studio Board)
+from classic import o2_index, o2_case  # noqa: E402
+
+
+# ---------------------------------------------------------------- Option 3 (Studio Board)
 def o3_header():
     return f"""<header class="bar"><div class="wrap"><div class="bar-in">
 <a class="chip-name" href="index.html"><span class="mono" aria-hidden="true">PJ</span><span>Prashant Kumar Jindal</span></a>
@@ -222,8 +226,8 @@ def o3_index():
     facts = "".join(
         f'<details{" open" if k == 0 else ""}><summary>{h}</summary>{ul}</details>'
         for k, (h, ul) in enumerate(facts_lists()))
-    return head(2, C.TITLE, C.DESC, True, ("plus-jakarta-sans-latin-wght-normal.woff2",)) + f"""<body>
-{skip()}{preview_bar(2)}{o3_header()}<main id="main">
+    return head(3, C.TITLE, C.DESC, True, ("plus-jakarta-sans-latin-wght-normal.woff2",)) + f"""<body>
+{skip()}{preview_bar(3)}{o3_header()}<main id="main">
 
 <section class="wrap bento hero-b" aria-labelledby="hero-title">
 <div class="tile intro-t" data-reveal>
@@ -285,8 +289,8 @@ def o3_case(i):
                    for k, (f, l) in enumerate(c["figs"]))
     tags = "".join(f"<li>{t}</li>" for t in c["tags"])
     note = f'<p class="note">{c["note"]}</p>' if c["note"] else ""
-    return head(2, f'{c["title"]} | Prashant Kumar Jindal', c["sum"], False, ("plus-jakarta-sans-latin-wght-normal.woff2",)) + f"""<body class="casepage">
-{skip()}{preview_bar(2)}{o3_header()}<main id="main">
+    return head(3, f'{c["title"]} | Prashant Kumar Jindal', c["sum"], False, ("plus-jakarta-sans-latin-wght-normal.woff2",)) + f"""<body class="casepage">
+{skip()}{preview_bar(3)}{o3_header()}<main id="main">
 <section class="wrap bento case-b">
 <div class="tile title-t" data-reveal>
 <a class="crumb" href="index.html#work">&larr; All work</a>
@@ -312,12 +316,13 @@ def write(path, text):
 
 
 def main():
-    builders = {1: (o1_index, o1_case), 2: (o3_index, o3_case)}
+    builders = {1: (o1_index, o1_case), 2: (o2_index, o2_case), 3: (o3_index, o3_case)}
     for n, (idx, case) in builders.items():
         write(f"option-{n}/index.html", idx())
         for i, c in enumerate(C.CASES):
             write(f"option-{n}/{c['slug']}.html", case(i))
-        shutil.copy(os.path.join(ROOT, "_build", "app.js"), os.path.join(ROOT, f"option-{n}", "app.js"))
+        if n != 2:
+            shutil.copy(os.path.join(ROOT, "_build", "app.js"), os.path.join(ROOT, f"option-{n}", "app.js"))
     print("built")
 
 
